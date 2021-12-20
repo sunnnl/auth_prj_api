@@ -29,8 +29,10 @@ module.exports = {
         console.log(token)
         if (err) {
           return res.json({
-            success: 0,
-            message: "Invalid Token..."
+            success: false,
+            message: "Invalid Token...",
+            code: 401,
+            user: null
           });
         } else {
           req.decoded = decoded;
@@ -39,8 +41,10 @@ module.exports = {
       });
     } else {
       return res.json({
-        success: 0,
-        message: "Access Denied! Unauthorized User"
+        success: false,
+        message: "Access Denied! Unauthorized User",
+        code: 400,
+        user: null
       });
     }
   }

@@ -95,9 +95,14 @@ module.exports = {
             }
             console.log(results)
             return res.json({
-                id: results.id,
-                nickname: results.nickname,
-                type: results.type
+                success: true,
+                message: "get user info by token",
+                code: 200,
+                user: {
+                    id: results.id,
+                    nickname: results.nickname,
+                    type: results.type
+                }
             })
         });
     },
@@ -111,16 +116,25 @@ module.exports = {
             }
             if (!results) {
                 return res.json({
-                    success: 0,
-                    message: "Invalid Token"
+                    success: false,
+                    message: "Invalid Token",
+                    code: 401
                 });
             }
             const jsontoken = sign({ result: results }, "[Token]", {
                 expiresIn: "10m"
             });
-            return res.header({
-                access_token: jsontoken
-            }).send();
+            // return res.header({
+            //     access_token: jsontoken
+            // }).send();
+            return res.json(
+                {
+                    success: true,
+                    message: "new token generated",
+                    code: 200,
+                    token: jsontoken
+                }
+            )
         })
     },
 
